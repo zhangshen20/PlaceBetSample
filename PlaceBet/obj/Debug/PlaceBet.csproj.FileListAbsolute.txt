@@ -12,3 +12,17 @@ C:\Users\shenz\source\repos\PlaceBet\PlaceBet\bin\Debug\Newtonsoft.Json.xml
 C:\Users\shenz\source\repos\PlaceBet\PlaceBet\obj\Debug\PlaceBet.csproj.CopyComplete
 C:\Users\shenz\source\repos\PlaceBet\PlaceBet\obj\Debug\PlaceBet.exe
 C:\Users\shenz\source\repos\PlaceBet\PlaceBet\obj\Debug\PlaceBet.pdb
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\bin\Debug\PlaceBet.exe.config
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\bin\Debug\PlaceBet.exe
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\bin\Debug\PlaceBet.pdb
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\bin\Debug\Newtonsoft.Json.dll
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\bin\Debug\Newtonsoft.Json.xml
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csprojAssemblyReference.cache
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.Form1.resources
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.Properties.Resources.resources
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csproj.GenerateResource.cache
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csproj.CoreCompileInputs.cache
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csproj.CopyComplete
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.exe
+C:\Users\shenz\source\repos\PlaceBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.pdb

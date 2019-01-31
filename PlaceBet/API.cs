@@ -16,7 +16,7 @@ namespace PlaceBet
         {
             public string token { get; set; }
             public string inactivityExpiry { get; set; }
-            public string vabsoluteExpiry { get; set; }
+            public string absoluteExpiry { get; set; }
         }
     }
 

@@ -96,10 +96,11 @@
             // 
             this.buttonPlaceBet.Location = new System.Drawing.Point(341, 138);
             this.buttonPlaceBet.Name = "buttonPlaceBet";
-            this.buttonPlaceBet.Size = new System.Drawing.Size(111, 72);
+            this.buttonPlaceBet.Size = new System.Drawing.Size(132, 72);
             this.buttonPlaceBet.TabIndex = 6;
             this.buttonPlaceBet.Text = "Place Bet";
             this.buttonPlaceBet.UseVisualStyleBackColor = true;
+            this.buttonPlaceBet.Click += new System.EventHandler(this.buttonPlaceBet_Click);
             // 
             // labelOdds
             // 
@@ -121,7 +122,7 @@
             // 
             this.buttonAuthenticate.Location = new System.Drawing.Point(341, 52);
             this.buttonAuthenticate.Name = "buttonAuthenticate";
-            this.buttonAuthenticate.Size = new System.Drawing.Size(111, 67);
+            this.buttonAuthenticate.Size = new System.Drawing.Size(132, 67);
             this.buttonAuthenticate.TabIndex = 9;
             this.buttonAuthenticate.Text = "Authenticate";
             this.buttonAuthenticate.UseVisualStyleBackColor = true;
