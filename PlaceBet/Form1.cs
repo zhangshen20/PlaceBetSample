@@ -66,13 +66,15 @@ namespace PlaceBet
                 Console.WriteLine("New Auth Token generated");
                 Console.WriteLine("Current time at {0}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
                 Console.WriteLine("Expiry  time at {0}", gAuthToken.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
+                Console.WriteLine("New Auth Token is {0}", gAuthToken.Token);
             }
             else
             {
-                Console.WriteLine(" ----------------------------------  ");
-                Console.WriteLine("Existing Token still active");
-                Console.WriteLine("Current time at {0}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
-                Console.WriteLine("Expiry  time at {0}", gAuthToken.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
+                //Console.WriteLine(" ----------------------------------  ");
+                //Console.WriteLine("Existing Token still active");
+                //Console.WriteLine("Current time at {0}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                //Console.WriteLine("Expiry  time at {0}", gAuthToken.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
+                //Console.WriteLine("Current Auth Token is {0}", gAuthToken.Token);
             }
         }
 
@@ -119,7 +121,17 @@ namespace PlaceBet
 
         private void buttonPlaceBet_Click(object sender, EventArgs e)
         {
-
+            BetTAB bBet = new BetTAB(this.AccountNumber, gAuthToken.Token, textBoxPropositionId.Text, "$1.00", textBoxOdds.Text, "WIN");
+            if(bBet.POSTingBetSlip())
+            {
+                Console.WriteLine(" ----------------------------------  ");
+                Console.WriteLine("SUCCEED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.PropositionId, bBet.Stake, bBet.Odds);
+            }
+            else
+            {
+                Console.WriteLine(" ----------------------------------  ");
+                Console.WriteLine("FAILED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.PropositionId, bBet.Stake, bBet.Odds);
+            }
         }
     }
 }

@@ -26,6 +26,18 @@ namespace PlaceBet
 
         public class _bets
         {
+            public string type { get; set; }
+
+            public List<_errors> errors { get; set; }
+
+            public class _errors
+            {
+                public string code { get; set; }
+                public string message { get; set; }
+            }
+
+            public string stake { get; set; }
+
             public List<_legs> legs { get; set; }
 
             public class _legs
@@ -33,7 +45,9 @@ namespace PlaceBet
                 public string type { get; set; }
                 public string propositionId { get; set; }
                 public string odds { get; set; }
-            }            
+            }
+            
+            public string status { get; set; }
         }
     }
 
@@ -43,6 +57,18 @@ namespace PlaceBet
 
         public class _bets
         {
+            public string type { get; set; }
+
+            public List<_errors> errors { get; set; }
+
+            public class _errors
+            {
+                public string code { get; set; }
+                public string message { get; set; }
+            }
+
+            public string stake { get; set; }
+
             public List<_legs> legs { get; set; }
 
             public class _legs
@@ -56,6 +82,18 @@ namespace PlaceBet
             public string status { get; set; }
             public string accountNumber { get; set; }
             public string accountBalance { get; set; }
+        }
+
+        public List<_errors> errors { get; set; }
+
+        public class _errors
+        {
+            public string odds { get; set; }
+            public string oldOdds { get; set; }
+            public string propositionId { get; set; }
+            public string code { get; set; }
+            public string message { get; set; }
+            public string betIndex { get; set; }
         }
     }
 

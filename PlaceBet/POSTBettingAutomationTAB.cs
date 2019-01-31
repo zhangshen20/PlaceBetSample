@@ -18,37 +18,37 @@ using System.Configuration;
 
 namespace PlaceBet
 {
-    class POSTBettingAutomationTAB
+    class BetTAB
     {
         public string TabcorpAuth { get; set; }
         public string AccountNumber { get; set; }
+        public string PropositionId { get; set; }
+        public string Odds { get; set; }
+        public string Stake { get; set; }
+        public string BetType { get; set; }
+
         public string URLAuthenticate { get; set; }
         public string URLBalance { get; set; }
         public string URLBetslipEnquiry { get; set; }
         public string URLBetslip { get; set; }
         public string UUIDV4 { get; set; }
-        public string PropositionId { get; set; }
-        public string Odds { get; set; }
 
-        public string RunnerName { get; set; }
-        public string BetAmount { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-
-        public POSTBettingAutomationTAB(string bettingurl, string runnername, string betamount, string username, string password)
+        public BetTAB(string accountnubmer, string token, string propositionid, string stake, string odds, string bettype)
         {
+            this.AccountNumber = accountnubmer;
+            this.TabcorpAuth = token;
+            this.PropositionId = propositionid;
+            this.Stake = stake;
+            this.Odds = odds;
+            this.BetType = bettype;
+
             this.URLAuthenticate = @"https://webapi.tab.com.au/v1/account-service/tab/authenticate";
             this.URLBalance = @"https://webapi.tab.com.au/v1/account-service/tab/accounts/" + this.AccountNumber + @"/balance";
             this.URLBetslipEnquiry = @"https://webapi.tab.com.au/v1/tab-betting-service/accounts/" + this.AccountNumber + @"/betslip-enquiry?TabcorpAuth=" + this.TabcorpAuth;
             this.URLBetslip = @"https://webapi.tab.com.au/v1/tab-betting-service/accounts/" + this.AccountNumber + @"/betslip?TabcorpAuth=" + this.TabcorpAuth;
-
-            this.RunnerName = runnername;
-            this.BetAmount = betamount;
-            this.Username = username;
-            this.Password = password;
         }
 
-        public void POSTingBetSlipEnquiry(string propositionid, string odds)
+        public void POSTingBetSlipEnquiry()
         {
             try
             {
@@ -58,7 +58,7 @@ namespace PlaceBet
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    string json = CreatePayloadBetSlipEnquiry(propositionid, odds);
+                    string json = CreatePayloadBetSlipEnquiry();
 
                     streamWriter.Write(json);
                     streamWriter.Flush();
@@ -81,8 +81,10 @@ namespace PlaceBet
         }
 
 
-        public void POSTingBetSlip(string propositionid, string odds)
+        public Boolean POSTingBetSlip()
         {
+            Boolean bPlaceBetSucceed = false;
+
             try
             {
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.URLBetslip);
@@ -91,7 +93,10 @@ namespace PlaceBet
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    string json = CreatePayloadBetSlip(propositionid, odds);
+                    string json = CreatePayloadBetSlip();
+
+                    Console.WriteLine(" ----------------------------------  ");
+                    Console.WriteLine(" json payload \t {0} ", json);
 
                     streamWriter.Write(json);
                     streamWriter.Flush();
@@ -104,38 +109,50 @@ namespace PlaceBet
                     var result = streamReader.ReadToEnd();
 
                     APITABBetSlipResponse betSlipResponse = JsonConvert.DeserializeObject<APITABBetSlipResponse>(result);
-                    this.Odds = betSlipResponse.bets.First().legs.First().odds;
+                    //this.Odds = betSlipResponse.bets.First().legs.First().odds;
+                    if(betSlipResponse.errors.Count == 0)
+                    {
+                        bPlaceBetSucceed = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine(" ----------------------------------  ");
+                        Console.WriteLine(" Error: (code)          \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().code);
+                        Console.WriteLine(" Error: (message)       \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().message);
+                        Console.WriteLine(" Error: (odds)          \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().odds);
+                        Console.WriteLine(" Error: (oldOdds)       \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().oldOdds);
+                        Console.WriteLine(" Error: (propositionId) \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().propositionId);
+                    }
+
                 }
+            }
+            catch(WebException e)
+            {
+                Console.WriteLine(" ----------------------------------  ");
+                Console.WriteLine("Error at POSTingBetSlip() -> " + e.Message);
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(" ----------------------------------  ");
+                Console.WriteLine("Error at POSTingBetSlip() -> " + e.Message);
             }
+
+            return bPlaceBetSucceed;
         }
 
-
-        public string CreatePayloadAuthenticate()
+        public string CreatePayloadBetSlipEnquiry()
         {
-            string sPayload = @"{""password"":""" + this.Password + @""",""channel"":""TABCOMAU"",""scopes"":["" * ""],""extendedTokenLifeTime"":true,""accountNumber"": " + this.AccountNumber + "}";
-            return sPayload;
-        }
-
-        public string CreatePayloadBetSlipEnquiry(string propositionid, string odds)
-        {
-            this.PropositionId = propositionid;
-            this.Odds = odds;
-
             string sPayload = @"
                         {
                           ""bets"": [
                             {
                               ""type"": ""FIXED_ODDS"",
-                              ""stake"": ""$1.00"",
+                              ""stake"": """ + this.Stake + @""",
                               ""legs"": [
                                 {
                                   ""type"": ""WIN"",
                                   ""propositionId"": " + this.PropositionId + @",
-                                  ""odds"": " + this.Odds + @"""
+                                  ""odds"": """ + this.Odds + @"""
                                 }
                               ],
                               ""enableMultiplier"": false,
@@ -154,7 +171,7 @@ namespace PlaceBet
             return g.ToString();
         }
 
-        public string CreatePayloadBetSlip(string propositionid, string odds)
+        public string CreatePayloadBetSlip()
         {
             this.UUIDV4 = GenerateUUIDV4();
 
@@ -164,12 +181,12 @@ namespace PlaceBet
                           ""bets"": [
                             {
                               ""type"": ""FIXED_ODDS"",
-                              ""stake"": ""$1.00"",
+                              ""stake"": """ + this.Stake + @""",
                               ""legs"": [
                                 {
                                   ""type"": ""WIN"",
                                   ""propositionId"": " + this.PropositionId + @",
-                                  ""odds"": " + this.Odds + @"""
+                                  ""odds"": """ + this.Odds + @"""
                                 }
                               ],
                               ""enableMultiplier"": false,
