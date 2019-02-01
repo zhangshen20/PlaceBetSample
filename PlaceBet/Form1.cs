@@ -121,7 +121,7 @@ namespace PlaceBet
 
         private void buttonPlaceBet_Click(object sender, EventArgs e)
         {
-            BetTAB bBet = new BetTAB(this.AccountNumber, gAuthToken.Token, textBoxPropositionId.Text, "$1.00", textBoxOdds.Text, "WIN");
+            BetTAB bBet = new BetTAB(this.AccountNumber, gAuthToken.Token, textBoxPropositionId.Text, "1", textBoxOdds.Text, "WIN");
             if(bBet.POSTingBetSlip())
             {
                 Console.WriteLine(" ----------------------------------  ");

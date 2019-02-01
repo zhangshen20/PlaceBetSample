@@ -38,9 +38,12 @@ namespace PlaceBet
             this.AccountNumber = accountnubmer;
             this.TabcorpAuth = token;
             this.PropositionId = propositionid;
-            this.Stake = stake;
-            this.Odds = odds;
+            this.Stake = String.Format("${0:F2}", (Convert.ToDecimal(stake)));
+            this.Odds = String.Format("{0:F2}", (Convert.ToDecimal(odds)));
             this.BetType = bettype;
+
+            Console.WriteLine("this.Stake -> " + this.Stake);
+            Console.WriteLine("this.Odds -> " + this.Odds);
 
             this.URLAuthenticate = @"https://webapi.tab.com.au/v1/account-service/tab/authenticate";
             this.URLBalance = @"https://webapi.tab.com.au/v1/account-service/tab/accounts/" + this.AccountNumber + @"/balance";
@@ -126,10 +129,16 @@ namespace PlaceBet
 
                 }
             }
-            catch(WebException e)
+            catch(WebException ex)
             {
-                Console.WriteLine(" ----------------------------------  ");
-                Console.WriteLine("Error at POSTingBetSlip() -> " + e.Message);
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    Console.WriteLine(" ----------------------------------  ");
+                    Console.WriteLine(reader.ReadToEnd());
+                }
+                                //Console.WriteLine(" ----------------------------------  ");
+                //Console.WriteLine("Error at POSTingBetSlip() -> " + e.Message);
             }
             catch (Exception e)
             {
