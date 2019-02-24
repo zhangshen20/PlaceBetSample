@@ -32,7 +32,6 @@ E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\PlaceBet.pdb
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\Newtonsoft.Json.dll
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\Newtonsoft.Json.pdb
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\Newtonsoft.Json.xml
-E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csprojResolveAssemblyReference.cache
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.Form1.resources
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.Properties.Resources.resources
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csproj.GenerateResource.cache
@@ -40,3 +39,5 @@ E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csproj.Cor
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csproj.CopyComplete
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.exe
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.pdb
+E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\RestSharp.dll
+E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\RestSharp.xml
