@@ -26,6 +26,8 @@ namespace PlaceBet
         System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
 
         private AuthToken gAuthToken = new AuthToken();
+        private AuthTokenSportsBet gAuthTokenSportsBet = new AuthTokenSportsBet();
+
         private int gTimerOffsetInSecs = 5;
 
         public Form1()
@@ -58,7 +60,7 @@ namespace PlaceBet
 
         private void TimerValidateAuthToken(Object myObject, EventArgs myEventArgs)
         {
-            ValidateAuthToken();
+            //ValidateAuthToken();
         }
 
         private void ValidateAuthToken()
@@ -124,69 +126,35 @@ namespace PlaceBet
             }
         }
 
-        public string CreatePayloadAuthenticateSportsBet()
+        public string CreateFormDataAuthenticateSportsBetUseLogin()
         {
             string sPayload = "client_id=cxp&grant_type=password&username=jackyzhang1981&password=Shenzhang123&scope=offline_access";
-            //string sPayload = HttpUtility.UrlEncode("client_id=cxp&grant_type=password&username=jackyzhang1981&password=Shenzhang123");
             return sPayload;
         }
 
-        public void GetAuthTokenSportsBet()
+        public string CreateFormDataAuthenticateSportsBetUseRefreshToken()
+        {
+            string sPayload = "client_id=cxp&grant_type=refresh_token&refresh_token=" + gAuthTokenSportsBet.RefreshToken;
+            return sPayload;
+        }
+
+        public void GetAuthTokenSportsBetUseLogin()
         {
             try
             {
-                //var client = new RestClient(@"https://www.sportsbet.com.au/apigw/auth/realms/sportsbet/protocol/openid-connect/token");
-                //var request = new RestRequest(Method.POST);
-
-                //request.AddHeader("Postman-Token", "bce6bd43-f684-4162-9e21-728f11938dad");
-                //request.AddHeader("cache-control", "no-cache");
-                //request.AddHeader("cookie", @"cust_lang=en; aid=8575744680914864; _ga=GA1.3.1848199981.1531856942; sbt_banner_cookie=1; optimizelyEndUserId=oeu1537716251577r0.3532249167138428; __zlcmid=oXhfEcjtNfgNOd; NaN_hash=ae29bf59WXGOHZAF1540292697941; sb_partner_mid=qF3bS5LVKIbulQmTAVK722Nd7ZgqdRLk12921; _gid=GA1.3.1714688751.1550894255; _gcl_au=1.1.2063565678.1550894256; _fbp=fb.2.1550894255916.672290551; tl_clid=1; tl_evtid=4526152; tl_cmpid=602; breakpoint=narrow; NJ_POI=e769089ee3d34add816b7f30f95efcae; tl_cid=1080031; OB_REQ=3e16098016ebe97c8350; OB_REQ_NONSSL=6d9bcb8610aab2daebf0; isLoggedIn=false; AKA_A2=A; utag_main=v_id:0164a9c9f21b002358b45ac4eec403072001d06a00bd0$_sn:13$_ss:0$_st:1550983801722$dc_visit:13$_prevpage:%2Flogin%3Bexp-1550985601726$ses_id:1550981767215%3Bexp-session$_pn:1%3Bexp-session$dc_event:7%3Bexp-session$dc_region:ap-southeast-2%3Bexp-session");
-                ////request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36");
-                //request.AddHeader("user-agent", "RestSharp / 105.0.1.0");                
-
-                //request.AddHeader("content-type", "application/x-www-form-urlencoded");                
-                //request.AddParameter("application/x-www-form-urlencoded", "client_id=cxp&grant_type=password&username=jackyzhang1981&password=Shenzhang123&scope=offline_access", ParameterType.RequestBody);
-
-                ////request.AddHeader("Accept", "application/json");
-                ////request.AddHeader("content-type", "application/json");
-                ////request.Parameters.Clear();
-                ////request.AddParameter("application/json", "{ \"client_id\": \"cxp\", \"grant_type\":\"password\",\"username\":\"jackyzhang1981\",\"password\":\"Shenzhang123\",\"scope\":\"offline_access\"} ", ParameterType.RequestBody);
-
-                ////request.AddHeader("content-type", "application/json");
-                ////request.AddParameter("application/json", "{ \"client_id\": \"cxp\", \"grant_type\":\"password\",\"username\":\"jackyzhang1981\",\"password\":\"Shenzhang123\",\"scope\":\"offline_access\"} ", ParameterType.RequestBody);
-
-
-                //IRestResponse response = client.Execute(request);
-
-                //if (response.StatusCode != HttpStatusCode.OK)
-                //{
-                //    Console.WriteLine("Access Token cannot obtain, process terminate");
-                //    return;
-                //}
-
                 Console.WriteLine(" *************** ");
 
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.URLAuthenticateSportsBet);
+
                 httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36";
-                //httpWebRequest.UserAgent = ".NET Framework";
-                //httpWebRequest.ContentType = "application/x-www-form-urlencoded";
-                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Accept = "application/json";
+                httpWebRequest.Headers.Add(HttpRequestHeader.Cookie, "cust_lang=en; aid=8575744680914864; _ga=GA1.3.1848199981.1531856942; sbt_banner_cookie=1; optimizelyEndUserId=oeu1537716251577r0.3532249167138428; __zlcmid=oXhfEcjtNfgNOd; NaN_hash=ae29bf59WXGOHZAF1540292697941; sb_partner_mid=qF3bS5LVKIbulQmTAVK722Nd7ZgqdRLk12921; _gid=GA1.3.1714688751.1550894255; _gcl_au=1.1.2063565678.1550894256; _fbp=fb.2.1550894255916.672290551; NJ_POI=e769089ee3d34add816b7f30f95efcae; tl_cid=1080031; OB_REQ=3e16098016ebe97c8350; OB_REQ_NONSSL=6d9bcb8610aab2daebf0; tl_clid=2; tl_cmpid=3955; tl_evtid=4531329; isLoggedIn=false; breakpoint=narrow; AKA_A2=A; _gat_GUA=1; utag_main=v_id:0164a9c9f21b002358b45ac4eec403072001d06a00bd0$_sn:17$_ss:0$_st:1551090727256$dc_visit:17$ses_id:1551088411877%3Bexp-session$_pn:2%3Bexp-session$_prevpage:%2Flogin%3Bexp-1551092527260$dc_event:4%3Bexp-session$dc_region:ap-southeast-2%3Bexp-session");
+                httpWebRequest.ContentType = "application/x-www-form-urlencoded";
                 httpWebRequest.Method = "POST";
 
-                //httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36";
-                //httpWebRequest.UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)";
-
-                //httpWebRequest.KeepAlive = false;
-                //httpWebRequest.ProtocolVersion = HttpVersion.Version10;
-                //httpWebRequest.ServicePoint.ConnectionLimit = 1;
-
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                //using (var streamWriter = httpWebRequest.GetRequestStream())
                 {
-                    string str = CreatePayloadAuthenticateSportsBet();
-                    //byte[] byteArray = Encoding.ASCII.GetBytes(str);
-
-                    //streamWriter.Write(byteArray, 0, byteArray.Length);
+                    string str = CreateFormDataAuthenticateSportsBetUseLogin();
                     streamWriter.Write(str);
                     streamWriter.Flush();
                     streamWriter.Close();
@@ -197,17 +165,66 @@ namespace PlaceBet
                 {
                     var result = streamReader.ReadToEnd();
 
-                    APITABAuthenticateResponse authencateResponse = JsonConvert.DeserializeObject<APITABAuthenticateResponse>(result);
-                    gAuthToken.Token = authencateResponse.authentication.token;
-                    gAuthToken.UpdateAbsoluteExpiryDateTimeUTC(authencateResponse.authentication.absoluteExpiry);
-                    gAuthToken.UpdateInactivityExpiryDateTimeUTC(authencateResponse.authentication.inactivityExpiry);
-                    this.textWebResponse.Text = gAuthToken.Token;
+                    APISportsBetAuthenticateResponse authencateResponse = JsonConvert.DeserializeObject<APISportsBetAuthenticateResponse>(result);
+                    gAuthTokenSportsBet.AccessToken = authencateResponse.access_token;
+                    gAuthTokenSportsBet.AccessTokenExpiresInSeconds = authencateResponse.expires_in;
+                    gAuthTokenSportsBet.RefreshToken = authencateResponse.refresh_token;
+                    gAuthTokenSportsBet.RefreshTokenExpiresInSeconds = authencateResponse.refresh_expires_in;
+                    gAuthTokenSportsBet.Scope = authencateResponse.scope;
+                    gAuthTokenSportsBet.SessionState = authencateResponse.session_state;
+                    gAuthTokenSportsBet.TokenType = authencateResponse.token_type;
+
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(" exception -> " + e.ToString());
-                MessageBox.Show(e.Message);
+                //MessageBox.Show(e.Message);
+            }
+        }
+
+        public void GetAuthTokenSportsBetUseRefreshToken()
+        {
+            try
+            {
+                Console.WriteLine(" *************** ");
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.URLAuthenticateSportsBet);
+
+                httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36";
+                httpWebRequest.Accept = "application/json";
+                httpWebRequest.Headers.Add(HttpRequestHeader.Cookie, "cust_lang=en; aid=8575744680914864; _ga=GA1.3.1848199981.1531856942; sbt_banner_cookie=1; optimizelyEndUserId=oeu1537716251577r0.3532249167138428; __zlcmid=oXhfEcjtNfgNOd; NaN_hash=ae29bf59WXGOHZAF1540292697941; sb_partner_mid=qF3bS5LVKIbulQmTAVK722Nd7ZgqdRLk12921; _gid=GA1.3.1714688751.1550894255; _gcl_au=1.1.2063565678.1550894256; _fbp=fb.2.1550894255916.672290551; NJ_POI=e769089ee3d34add816b7f30f95efcae; tl_cid=1080031; OB_REQ=3e16098016ebe97c8350; OB_REQ_NONSSL=6d9bcb8610aab2daebf0; tl_clid=2; tl_cmpid=3955; tl_evtid=4531329; isLoggedIn=false; breakpoint=narrow; AKA_A2=A; _gat_GUA=1; utag_main=v_id:0164a9c9f21b002358b45ac4eec403072001d06a00bd0$_sn:17$_ss:0$_st:1551090727256$dc_visit:17$ses_id:1551088411877%3Bexp-session$_pn:2%3Bexp-session$_prevpage:%2Flogin%3Bexp-1551092527260$dc_event:4%3Bexp-session$dc_region:ap-southeast-2%3Bexp-session");
+                httpWebRequest.ContentType = "application/x-www-form-urlencoded";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    string str = CreateFormDataAuthenticateSportsBetUseRefreshToken();
+                    streamWriter.Write(str);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+
+                    APISportsBetAuthenticateResponse authencateResponse = JsonConvert.DeserializeObject<APISportsBetAuthenticateResponse>(result);
+                    gAuthTokenSportsBet.AccessToken = authencateResponse.access_token;
+                    gAuthTokenSportsBet.AccessTokenExpiresInSeconds = authencateResponse.expires_in;
+                    gAuthTokenSportsBet.RefreshToken = authencateResponse.refresh_token;
+                    gAuthTokenSportsBet.RefreshTokenExpiresInSeconds = authencateResponse.refresh_expires_in;
+                    gAuthTokenSportsBet.Scope = authencateResponse.scope;
+                    gAuthTokenSportsBet.SessionState = authencateResponse.session_state;
+                    gAuthTokenSportsBet.TokenType = authencateResponse.token_type;
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(" exception -> " + e.ToString());
+                //MessageBox.Show(e.Message);
             }
         }
 

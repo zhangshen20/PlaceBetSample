@@ -35,4 +35,18 @@ namespace PlaceBet
             this.InactivityExpiryDateTimeUTC = DateTime.ParseExact(dtUtc, gsDateFormat, CultureInfo.InvariantCulture);
         }
     }
+
+    public class AuthTokenSportsBet
+    {
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
+
+        public int AccessTokenExpiresInSeconds { get; set; }
+        public int RefreshTokenExpiresInSeconds { get; set; }
+    
+        public string TokenType { get; set; }
+        public int NotBeforePolicy { get; set; }
+        public string SessionState { get; set; }
+        public string Scope { get; set; }
+    }
 }

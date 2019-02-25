@@ -41,3 +41,4 @@ E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.exe
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.pdb
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\RestSharp.dll
 E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\bin\Debug\RestSharp.xml
+E:\Gaming\GitHub\PlacedBet\PlaceBetSample\PlaceBet\obj\Debug\PlaceBet.csprojResolveAssemblyReference.cache
