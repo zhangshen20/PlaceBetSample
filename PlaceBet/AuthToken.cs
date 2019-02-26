@@ -38,6 +38,9 @@ namespace PlaceBet
 
     public class AuthTokenSportsBet
     {
+        public DateTime AbsoluteExpiryDateTimeUTC { get; set; }
+        public DateTime InactivityExpiryDateTimeUTC { get; set; }
+
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
 
@@ -48,5 +51,15 @@ namespace PlaceBet
         public int NotBeforePolicy { get; set; }
         public string SessionState { get; set; }
         public string Scope { get; set; }
+
+        public AuthTokenSportsBet()
+        {
+            this.AbsoluteExpiryDateTimeUTC = DateTime.UtcNow.AddDays(-1);
+        }
+
+        public void UpdateAbsoluteExpiryDateTimeUTC(int expire_in_seconds)
+        {
+            this.AbsoluteExpiryDateTimeUTC = DateTime.UtcNow.AddSeconds(expire_in_seconds);
+        }
     }
 }

@@ -52,28 +52,27 @@ namespace PlaceBet
         {
             this.Password = this.textBoxPassword.Text;
             this.AccountNumber = this.textBoxAccountNumber.Text;
-            this.URLAuthenticateTAB = @"https://webapi.tab.com.au/v1/account-service/tab/authenticate";
             this.URLAuthenticateSportsBet = @"https://www.sportsbet.com.au/apigw/auth/realms/sportsbet/protocol/openid-connect/token";
 
-            GetAuthTokenSportsBet();
+            GetAuthTokenSportsBetUseLogin();
         }
 
         private void TimerValidateAuthToken(Object myObject, EventArgs myEventArgs)
         {
-            //ValidateAuthToken();
+            RefreshAuthToken();
         }
 
-        private void ValidateAuthToken()
+        private void RefreshAuthToken()
         {
-            if(gAuthToken.AbsoluteExpiryDateTimeUTC.AddSeconds(-1 * gTimerOffsetInSecs) <= DateTime.UtcNow)
+            if(gAuthTokenSportsBet.AbsoluteExpiryDateTimeUTC.AddSeconds(-1 * gTimerOffsetInSecs) <= DateTime.UtcNow)
             {
-                GetAuthTokenSportsBet();
+                GetAuthTokenSportsBetUseRefreshToken();
 
                 Console.WriteLine(" ----------------------------------  ");
-                Console.WriteLine("New Auth Token generated");
+                Console.WriteLine("New Access Token generated");
                 Console.WriteLine("Current time at {0}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
-                Console.WriteLine("Expiry  time at {0}", gAuthToken.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
-                Console.WriteLine("New Auth Token is {0}", gAuthToken.Token);
+                Console.WriteLine("Expiry  time at {0}", gAuthTokenSportsBet.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
+                Console.WriteLine("New Access Token is {0}", gAuthTokenSportsBet.AccessToken);
             }
             else
             {
@@ -173,6 +172,15 @@ namespace PlaceBet
                     gAuthTokenSportsBet.Scope = authencateResponse.scope;
                     gAuthTokenSportsBet.SessionState = authencateResponse.session_state;
                     gAuthTokenSportsBet.TokenType = authencateResponse.token_type;
+                    gAuthTokenSportsBet.UpdateAbsoluteExpiryDateTimeUTC(gAuthTokenSportsBet.AccessTokenExpiresInSeconds);
+
+                    this.textWebResponse.Text = gAuthTokenSportsBet.AccessToken;
+
+                    Console.WriteLine(" -------------------------------------------------------------------- ");
+                    Console.WriteLine(" *** public void GetAuthTokenSportsBetUseLogin() *** ");
+                    Console.WriteLine("Access Token -> " + gAuthTokenSportsBet.AccessToken);
+                    Console.WriteLine("Time Now\t: {0}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                    Console.WriteLine("Expire At\t: {0}", gAuthTokenSportsBet.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
 
                 }
             }
@@ -219,6 +227,16 @@ namespace PlaceBet
                     gAuthTokenSportsBet.SessionState = authencateResponse.session_state;
                     gAuthTokenSportsBet.TokenType = authencateResponse.token_type;
 
+                    gAuthTokenSportsBet.UpdateAbsoluteExpiryDateTimeUTC(gAuthTokenSportsBet.AccessTokenExpiresInSeconds);
+
+                    this.textWebResponse.Text = gAuthTokenSportsBet.AccessToken;
+
+                    Console.WriteLine(" -------------------------------------------------------------------- ");
+                    Console.WriteLine(" *** public void GetAuthTokenSportsBetUseRefreshToken() *** ");
+                    Console.WriteLine("Access Token -> " + gAuthTokenSportsBet.AccessToken);
+                    Console.WriteLine("Time Now\t: {0}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+                    Console.WriteLine("Expire At\t: {0}", gAuthTokenSportsBet.AbsoluteExpiryDateTimeUTC.ToString("yyyy-MM-dd HH:mm:ss"));
+
                 }
             }
             catch (Exception e)
@@ -230,17 +248,30 @@ namespace PlaceBet
 
         private void buttonPlaceBet_Click(object sender, EventArgs e)
         {
-            BetTAB bBet = new BetTAB(this.AccountNumber, gAuthToken.Token, textBoxPropositionId.Text, "1", textBoxOdds.Text, "WIN");
-            if(bBet.POSTingBetSlip())
+            //BetTAB bBet = new BetTAB(this.AccountNumber, gAuthToken.Token, textBoxPropositionId.Text, "1", textBoxOdds.Text, "WIN");
+            //if(bBet.POSTingBetSlip())
+            //{
+            //    Console.WriteLine(" ----------------------------------  ");
+            //    Console.WriteLine("SUCCEED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.PropositionId, bBet.Stake, bBet.Odds);
+            //}
+            //else
+            //{
+            //    Console.WriteLine(" ----------------------------------  ");
+            //    Console.WriteLine("FAILED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.PropositionId, bBet.Stake, bBet.Odds);
+            //}
+
+            BetSportsBet bBet = new BetSportsBet(gAuthTokenSportsBet.AccessToken, textBoxPropositionId.Text, "0.01", "1");
+            if (bBet.POSTingBetSlipSportsBet())
             {
                 Console.WriteLine(" ----------------------------------  ");
-                Console.WriteLine("SUCCEED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.PropositionId, bBet.Stake, bBet.Odds);
+                Console.WriteLine("SUCCEED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.Outcome, bBet.Stake, bBet.Odds);
             }
             else
             {
                 Console.WriteLine(" ----------------------------------  ");
-                Console.WriteLine("FAILED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.PropositionId, bBet.Stake, bBet.Odds);
+                Console.WriteLine("FAILED: Place Bet PropositionId {0} with Stake {1} at FW Odds {2}", bBet.Outcome, bBet.Stake, bBet.Odds);
             }
+
         }
     }
 }

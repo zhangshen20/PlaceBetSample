@@ -43,60 +43,67 @@
             // 
             // textBoxAccountNumber
             // 
-            this.textBoxAccountNumber.Location = new System.Drawing.Point(168, 52);
+            this.textBoxAccountNumber.Location = new System.Drawing.Point(112, 34);
+            this.textBoxAccountNumber.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxAccountNumber.Name = "textBoxAccountNumber";
-            this.textBoxAccountNumber.Size = new System.Drawing.Size(141, 26);
+            this.textBoxAccountNumber.Size = new System.Drawing.Size(95, 20);
             this.textBoxAccountNumber.TabIndex = 0;
-            this.textBoxAccountNumber.Text = "2124435";
+            this.textBoxAccountNumber.Text = "jackyzhang1981";
             // 
             // labelAccountNumber
             // 
             this.labelAccountNumber.AutoSize = true;
-            this.labelAccountNumber.Location = new System.Drawing.Point(32, 57);
+            this.labelAccountNumber.Location = new System.Drawing.Point(21, 37);
+            this.labelAccountNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelAccountNumber.Name = "labelAccountNumber";
-            this.labelAccountNumber.Size = new System.Drawing.Size(128, 20);
+            this.labelAccountNumber.Size = new System.Drawing.Size(87, 13);
             this.labelAccountNumber.TabIndex = 1;
             this.labelAccountNumber.Text = "Account Number";
             // 
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Location = new System.Drawing.Point(34, 99);
+            this.labelPassword.Location = new System.Drawing.Point(23, 64);
+            this.labelPassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(78, 20);
+            this.labelPassword.Size = new System.Drawing.Size(53, 13);
             this.labelPassword.TabIndex = 2;
             this.labelPassword.Text = "Password";
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(168, 95);
+            this.textBoxPassword.Location = new System.Drawing.Point(112, 62);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = 'x';
-            this.textBoxPassword.Size = new System.Drawing.Size(141, 26);
+            this.textBoxPassword.Size = new System.Drawing.Size(95, 20);
             this.textBoxPassword.TabIndex = 3;
-            this.textBoxPassword.Text = "Likey00001";
+            this.textBoxPassword.Text = "Shenzhang123";
             // 
             // labelPropositionId
             // 
             this.labelPropositionId.AutoSize = true;
-            this.labelPropositionId.Location = new System.Drawing.Point(34, 138);
+            this.labelPropositionId.Location = new System.Drawing.Point(23, 90);
+            this.labelPropositionId.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPropositionId.Name = "labelPropositionId";
-            this.labelPropositionId.Size = new System.Drawing.Size(106, 20);
+            this.labelPropositionId.Size = new System.Drawing.Size(50, 13);
             this.labelPropositionId.TabIndex = 4;
-            this.labelPropositionId.Text = "Proposition Id";
+            this.labelPropositionId.Text = "Outcome";
             // 
             // textBoxPropositionId
             // 
-            this.textBoxPropositionId.Location = new System.Drawing.Point(168, 138);
+            this.textBoxPropositionId.Location = new System.Drawing.Point(112, 90);
+            this.textBoxPropositionId.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxPropositionId.Name = "textBoxPropositionId";
-            this.textBoxPropositionId.Size = new System.Drawing.Size(141, 26);
+            this.textBoxPropositionId.Size = new System.Drawing.Size(95, 20);
             this.textBoxPropositionId.TabIndex = 5;
             // 
             // buttonPlaceBet
             // 
-            this.buttonPlaceBet.Location = new System.Drawing.Point(341, 138);
+            this.buttonPlaceBet.Location = new System.Drawing.Point(227, 90);
+            this.buttonPlaceBet.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonPlaceBet.Name = "buttonPlaceBet";
-            this.buttonPlaceBet.Size = new System.Drawing.Size(132, 72);
+            this.buttonPlaceBet.Size = new System.Drawing.Size(88, 47);
             this.buttonPlaceBet.TabIndex = 6;
             this.buttonPlaceBet.Text = "Place Bet";
             this.buttonPlaceBet.UseVisualStyleBackColor = true;
@@ -105,24 +112,27 @@
             // labelOdds
             // 
             this.labelOdds.AutoSize = true;
-            this.labelOdds.Location = new System.Drawing.Point(32, 184);
+            this.labelOdds.Location = new System.Drawing.Point(21, 120);
+            this.labelOdds.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelOdds.Name = "labelOdds";
-            this.labelOdds.Size = new System.Drawing.Size(47, 20);
+            this.labelOdds.Size = new System.Drawing.Size(32, 13);
             this.labelOdds.TabIndex = 7;
             this.labelOdds.Text = "Odds";
             // 
             // textBoxOdds
             // 
-            this.textBoxOdds.Location = new System.Drawing.Point(168, 184);
+            this.textBoxOdds.Location = new System.Drawing.Point(112, 120);
+            this.textBoxOdds.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxOdds.Name = "textBoxOdds";
-            this.textBoxOdds.Size = new System.Drawing.Size(141, 26);
+            this.textBoxOdds.Size = new System.Drawing.Size(95, 20);
             this.textBoxOdds.TabIndex = 8;
             // 
             // buttonAuthenticate
             // 
-            this.buttonAuthenticate.Location = new System.Drawing.Point(341, 52);
+            this.buttonAuthenticate.Location = new System.Drawing.Point(227, 34);
+            this.buttonAuthenticate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonAuthenticate.Name = "buttonAuthenticate";
-            this.buttonAuthenticate.Size = new System.Drawing.Size(132, 67);
+            this.buttonAuthenticate.Size = new System.Drawing.Size(88, 44);
             this.buttonAuthenticate.TabIndex = 9;
             this.buttonAuthenticate.Text = "Authenticate";
             this.buttonAuthenticate.UseVisualStyleBackColor = true;
@@ -130,17 +140,18 @@
             // 
             // textWebResponse
             // 
-            this.textWebResponse.Location = new System.Drawing.Point(38, 262);
+            this.textWebResponse.Location = new System.Drawing.Point(25, 170);
+            this.textWebResponse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textWebResponse.Name = "textWebResponse";
-            this.textWebResponse.Size = new System.Drawing.Size(414, 26);
+            this.textWebResponse.Size = new System.Drawing.Size(290, 20);
             this.textWebResponse.TabIndex = 10;
             this.textWebResponse.WordWrap = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 731);
+            this.ClientSize = new System.Drawing.Size(365, 475);
             this.Controls.Add(this.textWebResponse);
             this.Controls.Add(this.buttonAuthenticate);
             this.Controls.Add(this.textBoxOdds);
@@ -152,6 +163,7 @@
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelAccountNumber);
             this.Controls.Add(this.textBoxAccountNumber);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

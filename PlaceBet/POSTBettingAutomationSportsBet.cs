@@ -15,88 +15,58 @@ using System.Threading;
 using Newtonsoft.Json;
 using System.Net.Mail;
 using System.Configuration;
+using System.Net.Http;
 
 namespace PlaceBet
 {
-    class POSTBettingAutomationSportsBet
+    class BetSportsBet
     {
-        public string TabcorpAuth { get; set; }
-        public string AccountNumber { get; set; }
-        public string PropositionId { get; set; }
+        public string AccessToken { get; set; }
+        public string Outcome { get; set; }
         public string Odds { get; set; }
+        public string PriceNum { get; set; }
+        public string PriceDen { get; set; }
         public string Stake { get; set; }
-        public string BetType { get; set; }
-
-        public string URLAuthenticate { get; set; }
-        public string URLBalance { get; set; }
-        public string URLBetslipEnquiry { get; set; }
-        public string URLBetslip { get; set; }
+        public string URLBetslipSportsBet { get; set; }
         public string UUIDV4 { get; set; }
 
-        public POSTBettingAutomationSportsBet(string accountnubmer, string token, string propositionid, string stake, string odds, string bettype)
+        public BetSportsBet(string accesstoken, string outcome, string stake, string odds)
         {
-            this.AccountNumber = accountnubmer;
-            this.TabcorpAuth = token;
-            this.PropositionId = propositionid;
-            this.Stake = String.Format("${0:F2}", (Convert.ToDecimal(stake)));
+            this.AccessToken = accesstoken;
+            this.Outcome = outcome;
+            this.Stake = String.Format("{0:F2}", (Convert.ToDecimal(stake)));
             this.Odds = String.Format("{0:F2}", (Convert.ToDecimal(odds)));
-            this.BetType = bettype;
+
+            // -- TEMP SET
+            this.PriceNum = "1000";
+            this.PriceDen = "1000";
 
             Console.WriteLine("this.Stake -> " + this.Stake);
             Console.WriteLine("this.Odds -> " + this.Odds);
 
-            this.URLAuthenticate = @"https://webapi.tab.com.au/v1/account-service/tab/authenticate";
-            this.URLBalance = @"https://webapi.tab.com.au/v1/account-service/tab/accounts/" + this.AccountNumber + @"/balance";
-            this.URLBetslipEnquiry = @"https://webapi.tab.com.au/v1/tab-betting-service/accounts/" + this.AccountNumber + @"/betslip-enquiry?TabcorpAuth=" + this.TabcorpAuth;
-            this.URLBetslip = @"https://webapi.tab.com.au/v1/tab-betting-service/accounts/" + this.AccountNumber + @"/betslip?TabcorpAuth=" + this.TabcorpAuth;
+            this.URLBetslipSportsBet = @"https://www.sportsbet.com.au/apigw/acs/bets";
         }
 
-        public void POSTingBetSlipEnquiry()
-        {
-            try
-            {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.URLBetslipEnquiry);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                {
-                    string json = CreatePayloadBetSlipEnquiry();
-
-                    streamWriter.Write(json);
-                    streamWriter.Flush();
-                    streamWriter.Close();
-                }
-
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-
-                    APITABBetSlipEnquiryResponse betSlipEnquiryResponse = JsonConvert.DeserializeObject<APITABBetSlipEnquiryResponse>(result);
-                    this.Odds = betSlipEnquiryResponse.bets.First().legs.First().odds;
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
-
-        public Boolean POSTingBetSlip()
+        public Boolean POSTingBetSlipSportsBet()
         {
             Boolean bPlaceBetSucceed = false;
 
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.URLBetslip);
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this.URLBetslipSportsBet);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
+                httpWebRequest.Headers.Add("accesstoken", this.AccessToken);
+
+                string sTransuniqueId = this.GenerateUUIDV4();
+                Console.WriteLine("accesstoken -> {0}", this.AccessToken);
+                Console.WriteLine("transuniqueid -> {0}", sTransuniqueId);
+
+                httpWebRequest.Headers.Add("transuniqueid", sTransuniqueId);
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    string json = CreatePayloadBetSlip();
+                    string json = CreatePayloadBetSlipSportsBet();
 
                     Console.WriteLine(" ----------------------------------  ");
                     Console.WriteLine(" json payload \t {0} ", json);
@@ -107,25 +77,36 @@ namespace PlaceBet
                 }
 
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+                // Temp Set 'bPlaceBetSucceed = true;'
+                bPlaceBetSucceed = true;
+
+                //HttpClientHandler handler = new HttpClientHandler();
+                //handler.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
+                //HttpClient _client = new HttpClient(handler);
+
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
 
-                    APITABBetSlipResponse betSlipResponse = JsonConvert.DeserializeObject<APITABBetSlipResponse>(result);
-                    //this.Odds = betSlipResponse.bets.First().legs.First().odds;
-                    if (betSlipResponse.errors.Count == 0)
-                    {
-                        bPlaceBetSucceed = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine(" ----------------------------------  ");
-                        Console.WriteLine(" Error: (code)          \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().code);
-                        Console.WriteLine(" Error: (message)       \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().message);
-                        Console.WriteLine(" Error: (odds)          \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().odds);
-                        Console.WriteLine(" Error: (oldOdds)       \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().oldOdds);
-                        Console.WriteLine(" Error: (propositionId) \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().propositionId);
-                    }
+                    Console.WriteLine(" *** var result = streamReader.ReadToEnd(); *** ");
+                    Console.WriteLine(result.ToString());
+
+                    //APISportsBetBetSlipResponse betSlipResponse = JsonConvert.DeserializeObject<APISportsBetBetSlipResponse>(result);
+
+                    //if (betSlipResponse.errors.Count == 0)
+                    //{
+                    //    bPlaceBetSucceed = true;
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine(" ----------------------------------  ");
+                    //    Console.WriteLine(" Error: (code)          \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().code);
+                    //    Console.WriteLine(" Error: (message)       \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().message);
+                    //    Console.WriteLine(" Error: (odds)          \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().odds);
+                    //    Console.WriteLine(" Error: (oldOdds)       \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().oldOdds);
+                    //    Console.WriteLine(" Error: (propositionId) \t {0} ", betSlipResponse.errors.First<APITABBetSlipResponse._errors>().propositionId);
+                    //}
 
                 }
             }
@@ -149,47 +130,20 @@ namespace PlaceBet
             return bPlaceBetSucceed;
         }
 
-        public string CreatePayloadBetSlipEnquiry()
-        {
-            string sPayload = @"
-                        {
-                          ""bets"": [
-                            {
-                              ""type"": ""FIXED_ODDS"",
-                              ""stake"": """ + this.Stake + @""",
-                              ""legs"": [
-                                {
-                                  ""type"": ""WIN"",
-                                  ""propositionId"": " + this.PropositionId + @",
-                                  ""odds"": """ + this.Odds + @"""
-                                }
-                              ],
-                              ""enableMultiplier"": false,
-                              ""source"": ""racing.race-nav.race.bet-type""
-                            }
-                          ]
-                        }
-            ";
-
-            return sPayload;
-        }
-
         public string GenerateUUIDV4()
         {
             Guid g = Guid.NewGuid();
-            return g.ToString();
+            return g.ToString().Replace("-", "").Substring(0,29);
         }
 
-        public string CreatePayloadBetSlip()
+        public string CreatePayloadBetSlipSportsBet()
         {
-            this.UUIDV4 = GenerateUUIDV4();
-
             string sPayload = @"
                 {
                     ""betItems"": [
                     {
                         ""betNo"": 0,
-                        ""stakePerLine"": 0.01,
+                        ""stakePerLine"": " + this.Stake.ToString() + @",
                         ""betType"": ""SGL"",
                         ""legs"": [
                         {
@@ -199,11 +153,11 @@ namespace PlaceBet
                             ""legDesc"": """",
                             ""parts"": [
                             {
-                                ""outcome"": 456520904,
+                                ""outcome"": " + this.Outcome.ToString() + @", 
                                 ""partNo"": 1,
                                 ""priceType"": ""L"",
-                                ""priceNum"": 4000,
-                                ""priceDen"": 1000
+                                ""priceNum"": " + this.PriceNum.ToString() + @",
+                                ""priceDen"": " + this.PriceDen.ToString() + @"
                             }
                             ]
                         }

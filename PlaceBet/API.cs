@@ -127,4 +127,9 @@ namespace PlaceBet
         public string session_state { get; set; }
         public string scope { get; set; }
     }
+
+    public class APISportsBetBetSlipResponse
+    {
+        public string correlationId { get; set; }
+    }
 }
